@@ -1,10 +1,16 @@
 import UIKit
 import PokemonAPI
 
+struct Pokemon {
+    let name: String
+}
+
 class ViewController: UITableViewController {
     
-    var pokemonNames: [String] = []
     let pokemonAPI = PokemonAPI()
+    var pokemons: [Pokemon] = []
+    //var pokemonNames: [String] = []
+    //var pokemonIDs: [Int] = []
     private static let reuseIdentifier = "identifier"
     
     override func viewDidLoad() {
@@ -18,7 +24,9 @@ class ViewController: UITableViewController {
             pokemonAPI.pokemonService.fetchPokemon("\(i)") { result in
                 switch result {
                 case .success(let pokemon):
-                    self.pokemonNames.append(pokemon.name!.capitalized)
+                    let poke = Pokemon(name: pokemon.name!.capitalized)
+                    self.pokemons.append(poke)
+                    //self.pokemonIDs.append(pokemon.id!)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -30,17 +38,32 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pokemonNames.count
+        return pokemons.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell();
-        cell.textLabel?.text = pokemonNames[indexPath.row]
+        cell.textLabel?.text = pokemons[indexPath.row].name
         return cell
     }
     
+    /*
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         tableView.reloadRows(at: [indexPath], with: .automatic)
     }
+     */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        let selectedPokemon = pokemons[indexPath.row]
+        
+        let storyboard = UIStoryboard(name: "PokemonInfo", bundle: nil)
+        guard let pokemonInfo = storyboard.instantiateViewController(withIdentifier: "info") as? PokemonInfo else {return}
+        pokemonInfo.selectedPokemon = selectedPokemon
+        self.navigationController?.pushViewController(pokemonInfo, animated: true)
+        
+    }
+    
 }
