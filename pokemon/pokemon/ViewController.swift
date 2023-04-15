@@ -3,14 +3,14 @@ import PokemonAPI
 
 struct Pokemon {
     let name: String
+    let type: [String]
 }
 
 class ViewController: UITableViewController {
     
     let pokemonAPI = PokemonAPI()
     var pokemons: [Pokemon] = []
-    //var pokemonNames: [String] = []
-    //var pokemonIDs: [Int] = []
+    
     private static let reuseIdentifier = "identifier"
     
     override func viewDidLoad() {
@@ -24,9 +24,9 @@ class ViewController: UITableViewController {
             pokemonAPI.pokemonService.fetchPokemon("\(i)") { result in
                 switch result {
                 case .success(let pokemon):
-                    let poke = Pokemon(name: pokemon.name!.capitalized)
+                    let types = pokemon.types?.compactMap({ $0.type?.name}) ?? []
+                    let poke = Pokemon(name: pokemon.name!.capitalized, type: types)
                     self.pokemons.append(poke)
-                    //self.pokemonIDs.append(pokemon.id!)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
@@ -46,13 +46,6 @@ class ViewController: UITableViewController {
         cell.textLabel?.text = pokemons[indexPath.row].name
         return cell
     }
-    
-    /*
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        tableView.reloadRows(at: [indexPath], with: .automatic)
-    }
-     */
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
