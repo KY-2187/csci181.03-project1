@@ -13,6 +13,7 @@
 		DD1CF70C29E9AB5000F3D02A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD1CF70A29E9AB5000F3D02A /* Main.storyboard */; };
 		DD1CF70E29E9AB5100F3D02A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD1CF70D29E9AB5100F3D02A /* Assets.xcassets */; };
 		DD1CF71129E9AB5100F3D02A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD1CF70F29E9AB5100F3D02A /* LaunchScreen.storyboard */; };
+		DD1CF71A29E9B10100F3D02A /* PokemonAPI in Frameworks */ = {isa = PBXBuildFile; productRef = DD1CF71929E9B10100F3D02A /* PokemonAPI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD1CF71A29E9B10100F3D02A /* PokemonAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = pokemon;
+			packageProductDependencies = (
+				DD1CF71929E9B10100F3D02A /* PokemonAPI */,
+			);
 			productName = pokemon;
 			productReference = DD1CF70129E9AB5000F3D02A /* pokemon.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = DD1CF6F829E9AB4F00F3D02A;
+			packageReferences = (
+				DD1CF71829E9B10100F3D02A /* XCRemoteSwiftPackageReference "PokemonAPI" */,
+			);
 			productRefGroup = DD1CF70229E9AB5000F3D02A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -356,6 +364,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DD1CF71829E9B10100F3D02A /* XCRemoteSwiftPackageReference "PokemonAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kinkofer/PokemonAPI";
+			requirement = {
+				kind = exactVersion;
+				version = 6.1.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DD1CF71929E9B10100F3D02A /* PokemonAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DD1CF71829E9B10100F3D02A /* XCRemoteSwiftPackageReference "PokemonAPI" */;
+			productName = PokemonAPI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DD1CF6F929E9AB4F00F3D02A /* Project object */;
 }
