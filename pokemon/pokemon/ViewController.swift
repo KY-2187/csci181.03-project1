@@ -3,6 +3,7 @@ import PokemonAPI
 
 struct Pokemon {
     let name: String
+    let localizedName: String
     let type: [String]
 }
 
@@ -16,7 +17,7 @@ class ViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.title = "Pokemon (en)"
+        self.navigationItem.title = NSLocalizedString("page-title", comment: "")
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: ViewController.reuseIdentifier)
         
@@ -24,8 +25,10 @@ class ViewController: UITableViewController {
             pokemonAPI.pokemonService.fetchPokemon("\(i)") { result in
                 switch result {
                 case .success(let pokemon):
-                    let types = pokemon.types?.compactMap({ $0.type?.name}) ?? []
-                    let poke = Pokemon(name: pokemon.name!.capitalized, type: types)
+                    let types = pokemon.types?.compactMap({ type in
+                                        NSLocalizedString("\(type.type?.name?.lowercased() ?? "")-display-text", comment: "")
+                                    }) ?? []
+                    let poke = Pokemon(name: pokemon.name!.capitalized, localizedName: NSLocalizedString("pokemon-name-\(i)", comment: ""), type: types)
                     self.pokemons.append(poke)
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
@@ -43,7 +46,7 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell();
-        cell.textLabel?.text = pokemons[indexPath.row].name
+        cell.textLabel?.text = pokemons[indexPath.row].localizedName
         return cell
     }
     
