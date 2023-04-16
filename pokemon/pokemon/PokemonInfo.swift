@@ -52,9 +52,8 @@ class PokemonInfo: UIViewController {
         pokemonAPI.pokemonService.fetchPokemon(name) { result in
             switch result {
             case .success(let pokemon):
-                guard let spriteURLString = pokemon.sprites?.frontDefault, let url = URL(string: spriteURLString) else {
-                    return
-                }
+                guard let imageURLString = pokemon.sprites?.frontDefault, let url = URL(string: imageURLString)
+                else { return }
                 
                 URLSession.shared.dataTask(with: url) { data, response, error in
                     if let data = data {
@@ -68,7 +67,6 @@ class PokemonInfo: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        
         setupUI()
     }
     
@@ -82,9 +80,51 @@ class PokemonInfo: UIViewController {
         
         if let types = selectedPokemon?.type {
             for type in types {
-                let typeLabel = UILabel()
-                typeLabel.text = type
-                typeLabel.font = UIFont.systemFont(ofSize: 20)
+                let typeLabel = UILabelPadded()
+                typeLabel.text = type.capitalized
+                // typeLabel.backgroundColor = UIColor(hex: "#ff705848")
+                typeLabel.layer.cornerRadius = 8
+                typeLabel.clipsToBounds = true
+                switch type {
+                    case "bug":
+                        typeLabel.backgroundColor = UIColor(hex: "#A8B820")
+                    case "dark":
+                        typeLabel.backgroundColor = UIColor(hex: "#705848")
+                    case "dragon":
+                        typeLabel.backgroundColor = UIColor(hex: "#7038F8")
+                    case "electric":
+                        typeLabel.backgroundColor = UIColor(hex: "#F8D030")
+                    case "fairy":
+                        typeLabel.backgroundColor = UIColor(hex: "#EE99AC")
+                    case "fighting":
+                        typeLabel.backgroundColor = UIColor(hex: "C03028")
+                    case "fire":
+                        typeLabel.backgroundColor = UIColor(hex: "#F08030")
+                    case "flying":
+                        typeLabel.backgroundColor = UIColor(hex: "#A890F0")
+                    case "ghost":
+                        typeLabel.backgroundColor = UIColor(hex: "#705898")
+                    case "grass":
+                        typeLabel.backgroundColor = UIColor(hex: "#78C850")
+                    case "ground":
+                        typeLabel.backgroundColor = UIColor(hex: "#E0C068")
+                    case "ice":
+                        typeLabel.backgroundColor = UIColor(hex: "#98D8D8")
+                    case "normal":
+                        typeLabel.backgroundColor = UIColor(hex: "#A8A878")
+                    case "poison":
+                        typeLabel.backgroundColor = UIColor(hex: "#A040A0")
+                    case "psychic":
+                        typeLabel.backgroundColor = UIColor(hex: "#F85888")
+                    case "rock":
+                        typeLabel.backgroundColor = UIColor(hex: "#B8A038")
+                    case "steel":
+                        typeLabel.backgroundColor = UIColor(hex: "#B8B8D0")
+                    case "water":
+                        typeLabel.backgroundColor = UIColor(hex: "#6890F0")
+                    default:
+                        typeLabel.backgroundColor = UIColor.white
+                }
                 typeStackView.addArrangedSubview(typeLabel)
             }
         }
@@ -97,5 +137,50 @@ class PokemonInfo: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: guide.trailingAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+    }
+}
+
+extension UIColor {
+    public convenience init?(hex: String) {
+        let r, g, b, a: CGFloat
+
+        var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        if hexString.hasPrefix("#") {
+            hexString = String(hexString.dropFirst())
+        }
+
+        guard hexString.count == 6 || hexString.count == 8,
+              let hexValue = UInt64(hexString, radix: 16) else {
+            return nil
+        }
+
+        if hexString.count == 8 {
+            r = CGFloat((hexValue & 0xff000000) >> 24) / 255
+            g = CGFloat((hexValue & 0x00ff0000) >> 16) / 255
+            b = CGFloat((hexValue & 0x0000ff00) >> 8) / 255
+            a = CGFloat(hexValue & 0x000000ff) / 255
+        } else {
+            r = CGFloat((hexValue & 0xff0000) >> 16) / 255
+            g = CGFloat((hexValue & 0x00ff00) >> 8) / 255
+            b = CGFloat(hexValue & 0x0000ff) / 255
+            a = 1.0
+        }
+
+        self.init(red: r, green: g, blue: b, alpha: a)
+    }
+}
+
+class UILabelPadded: UILabel {
+    let insets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: insets))
+    }
+    
+    override var intrinsicContentSize: CGSize {
+        let size = super.intrinsicContentSize
+        return CGSize(width: size.width + insets.left + insets.right,
+                      height: size.height + insets.top + insets.bottom)
     }
 }
