@@ -59,7 +59,5 @@ class ViewController: UITableViewController {
         guard let pokemonInfo = storyboard.instantiateViewController(withIdentifier: "info") as? PokemonInfo else {return}
         pokemonInfo.selectedPokemon = selectedPokemon
         self.navigationController?.pushViewController(pokemonInfo, animated: true)
-        
     }
-    
 }

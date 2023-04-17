@@ -86,41 +86,41 @@ class PokemonInfo: UIViewController {
                 typeLabel.clipsToBounds = true
                 switch type {
                     case "\(NSLocalizedString("bug-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#A8B820")
+                        typeLabel.backgroundColor = UIColor(named: "Bug")
                     case "\(NSLocalizedString("dark-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#705848")
+                        typeLabel.backgroundColor = UIColor(named: "Dark")
                     case "\(NSLocalizedString("dragon-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#7038F8")
+                        typeLabel.backgroundColor = UIColor(named: "Dragon")
                     case "\(NSLocalizedString("electric-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#F8D030")
+                    typeLabel.backgroundColor = UIColor(named: "Electric")
                     case "\(NSLocalizedString("fairy-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#EE99AC")
+                    typeLabel.backgroundColor = UIColor(named: "Fairy")
                     case "\(NSLocalizedString("fighting-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "C03028")
+                        typeLabel.backgroundColor = UIColor(named: "Fighting")
                     case "\(NSLocalizedString("fire-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#F08030")
+                        typeLabel.backgroundColor = UIColor(named: "Fire")
                     case "\(NSLocalizedString("flying-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#A890F0")
+                        typeLabel.backgroundColor = UIColor(named: "Flying")
                     case "\(NSLocalizedString("ghost-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#705898")
+                        typeLabel.backgroundColor = UIColor(named: "Ghost")
                     case "\(NSLocalizedString("grass-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#78C850")
+                        typeLabel.backgroundColor = UIColor(named: "Grass")
                     case "\(NSLocalizedString("ground-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#E0C068")
+                        typeLabel.backgroundColor = UIColor(named: "Ground")
                     case "\(NSLocalizedString("ice-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#98D8D8")
+                        typeLabel.backgroundColor = UIColor(named: "Ice")
                     case "\(NSLocalizedString("normal-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#A8A878")
+                        typeLabel.backgroundColor = UIColor(named: "Normal")
                     case "\(NSLocalizedString("poison-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#A040A0")
+                        typeLabel.backgroundColor = UIColor(named: "Poison")
                     case "\(NSLocalizedString("psychic-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#F85888")
+                        typeLabel.backgroundColor = UIColor(named: "Psychic")
                     case "\(NSLocalizedString("rock-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#B8A038")
+                        typeLabel.backgroundColor = UIColor(named: "Rock")
                     case "\(NSLocalizedString("steel-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#B8B8D0")
+                        typeLabel.backgroundColor = UIColor(named: "Steel")
                     case "\(NSLocalizedString("water-display-text", comment: ""))":
-                        typeLabel.backgroundColor = UIColor(hex: "#6890F0")
+                        typeLabel.backgroundColor = UIColor(named: "Water")
                     default:
                         typeLabel.backgroundColor = UIColor.white
                 }
@@ -136,37 +136,6 @@ class PokemonInfo: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: guide.trailingAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
-    }
-}
-
-extension UIColor {
-    public convenience init?(hex: String) {
-        let r, g, b, a: CGFloat
-
-        var hexString = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        if hexString.hasPrefix("#") {
-            hexString = String(hexString.dropFirst())
-        }
-
-        guard hexString.count == 6 || hexString.count == 8,
-              let hexValue = UInt64(hexString, radix: 16) else {
-            return nil
-        }
-
-        if hexString.count == 8 {
-            r = CGFloat((hexValue & 0xff000000) >> 24) / 255
-            g = CGFloat((hexValue & 0x00ff0000) >> 16) / 255
-            b = CGFloat((hexValue & 0x0000ff00) >> 8) / 255
-            a = CGFloat(hexValue & 0x000000ff) / 255
-        } else {
-            r = CGFloat((hexValue & 0xff0000) >> 16) / 255
-            g = CGFloat((hexValue & 0x00ff00) >> 8) / 255
-            b = CGFloat(hexValue & 0x0000ff) / 255
-            a = 1.0
-        }
-
-        self.init(red: r, green: g, blue: b, alpha: a)
     }
 }
 
