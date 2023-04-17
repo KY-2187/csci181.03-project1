@@ -35,6 +35,18 @@ class ViewController: UITableViewController {
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(
+                            title: "An error occurred",
+                            message: "Failed to load Pokemon. Please check your internet connection and try again.",
+                            preferredStyle: .alert
+                        )
+                        let okayAction = UIAlertAction(title: "Okay", style: .cancel) { _ in
+                            print("Okay")
+                        }
+                        alert.addAction(okayAction)
+                        self.present(alert, animated: true, completion: nil)
+                    }
                 }
             }
         }

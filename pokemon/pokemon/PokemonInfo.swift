@@ -65,6 +65,19 @@ class PokemonInfo: UIViewController {
                 
             case .failure(let error):
                 print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                    let alert = UIAlertController(
+                        title: "An error occurred",
+                        message: "Failed to load Pokemon. Please check your internet connection and try again.",
+                        preferredStyle: .alert
+                    )
+                    let okayAction = UIAlertAction(title: "Okay", style: .cancel) { _ in
+                        print("Okay")
+                    }
+                    alert.addAction(okayAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
         }
         setupUI()
